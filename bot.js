@@ -7,5 +7,5 @@ client
     console.log(`Aoba estou online no servidor ${client.user.tag}🔥`);
   })
   .catch((err) => {
-    console.log(`Opps, tivemos um erro - ${err}`);
+    console.log(`Opps, tive um erro - ${err}`);
   });
