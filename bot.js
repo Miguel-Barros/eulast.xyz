@@ -30,3 +30,8 @@ client.on("messageCreate", (message) => {
     }
   }
 });
+
+client.on("guildMemberAdd", (member) => {
+  let role = member.guild.roles.cache.find((r) => r.name === "Não Verificado");
+  member.roles.add(role);
+});
