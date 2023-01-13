@@ -1,0 +1,14 @@
+{
+  "name": "eulast.xyz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "author": "https://eulast.xyz/",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.7.1"
+  }
+}
