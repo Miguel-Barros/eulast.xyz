@@ -11,15 +11,40 @@ module.exports = {
     const amount = args.join(" ");
 
     if (!amount || isNaN(amount) || amount < 1 || amount > 100 || amount == 0) {
-      return message.reply("você precisa colocar um número de 1 a 100!");
+      return message.reply("você precisa especificar um número entre 1 e 100!");
     }
 
     await message.channel.messages.fetch({ limit: amount }).then((messages) => {
-      message.channel.bulkDelete(messages);
-    });
+      if (messages.size <= 1) {
+        return message
+          .reply("Parece que não há mensagens para serem apagadas!")
+          .then((msg) => {
+            setTimeout(() => {
+              message.delete();
+              msg.delete();
+            }, 5000);
+          });
+      }
 
-    message.reply(`Foram deletadas ${amount} mensagens!`).then((msg) => {
-      setTimeout(() => msg.delete(), 5000);
+      message
+        .reply(`Estou limpando ${amount} mensagens, um segundo...`)
+        .then((msg) => {
+          setTimeout(() => {
+            msg.delete();
+          }, 3000);
+        });
+      setTimeout(() => {
+        message.channel.bulkDelete(messages);
+        message.channel
+          .send(
+            `Uffa... ${message.author} consegui apagar as mensagens com sucesso! `
+          )
+          .then((msg) => {
+            setTimeout(() => {
+              msg.delete();
+            }, 10000);
+          });
+      }, 3000);
     });
   },
 };
