@@ -42,7 +42,7 @@ module.exports = {
           .then((msg) => {
             setTimeout(() => {
               msg.delete();
-            }, 10000);
+            }, 5000);
           });
       }, 3000);
     });

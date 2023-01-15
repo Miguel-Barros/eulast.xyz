@@ -1,7 +1,19 @@
 const Discord = require("discord.js");
-const client = new Discord.Client({ intents: [1, 512, 32768, 2, 128] });
 const config = require("./config.json");
 const fs = require("fs");
+const client = new Discord.Client({
+  intents: [
+    1,
+    512,
+    32768,
+    2,
+    128,
+    "GuildMessages",
+    "GuildMessageReactions",
+    "Guilds",
+  ],
+  partials: ["MESSAGE", "CHANNEL", "REACTION"],
+});
 
 require("dotenv").config();
 
@@ -11,7 +23,7 @@ client.on("ready", () => {
   console.log(`Aoba, eu estou online no servidor (${client.user.username})🔥`);
 });
 
-client.on("messageCreate", (message) => {
+client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
   if (message.channel.type === Discord.ChannelType.DM) return;
 
@@ -36,9 +48,7 @@ client.on("messageCreate", (message) => {
       });
     } catch (err) {
       if (config.deleteCommandsMessage === true) {
-        setTimeout(() => {
-          message.delete();
-        }, 1500);
+        message.delete();
       }
 
       message.channel
@@ -56,9 +66,4 @@ client.on("messageCreate", (message) => {
       );
     }
   }
-});
-
-client.on("guildMemberAdd", (member) => {
-  let role = member.guild.roles.cache.find((r) => r.name === "Não Verificado");
-  member.roles.add(role);
 });
